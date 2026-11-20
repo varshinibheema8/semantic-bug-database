@@ -6,3 +6,5 @@ venv/
 .idea/
 .vscode/
 PathSnap_Bayesian_Optimization_Report_Draft.docx
+*.docx
+Semantic_Database_for_Software_Bugs_Final_Report.pdf
