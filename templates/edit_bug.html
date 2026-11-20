@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Bug | Semantic Bug Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <header class="form-header">
+        <div class="form-header-content">
+            <h1>Semantic Bug Tracker</h1>
+            <p>Update and manage software bugs</p>
+        </div>
+    </header>
+
+    <main class="add-bug-container">
+
+        <div class="add-bug-card">
+
+            <div class="form-heading">
+                <h2>Edit Bug Details</h2>
+                <p>Update the information for Bug ID {{ bug[0] }}.</p>
+            </div>
+
+            <form method="POST"
+                  action="{{ url_for('update_bug', bug_id=bug[0]) }}">
+
+                <div class="bug-form-grid">
+
+                    <div class="form-group full-width">
+                        <label for="title">Bug Title *</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value="{{ bug[1] }}"
+                            maxlength="300"
+                            required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="4">{{ bug[2] or '' }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+
+                            <option value="Open"
+                                {% if bug[3] == 'Open' %}selected{% endif %}>
+                                Open
+                            </option>
+
+                            <option value="In Progress"
+                                {% if bug[3] == 'In Progress' %}selected{% endif %}>
+                                In Progress
+                            </option>
+
+                            <option value="Closed"
+                                {% if bug[3] == 'Closed' %}selected{% endif %}>
+                                Closed
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="severity">Severity</label>
+                        <select id="severity" name="severity">
+
+                            <option value="Low"
+                                {% if bug[4] == 'Low' %}selected{% endif %}>
+                                Low
+                            </option>
+
+                            <option value="Medium"
+                                {% if bug[4] == 'Medium' %}selected{% endif %}>
+                                Medium
+                            </option>
+
+                            <option value="High"
+                                {% if bug[4] == 'High' %}selected{% endif %}>
+                                High
+                            </option>
+
+                            <option value="Critical"
+                                {% if bug[4] == 'Critical' %}selected{% endif %}>
+                                Critical
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority" name="priority">
+
+                            <option value="Low"
+                                {% if bug[5] == 'Low' %}selected{% endif %}>
+                                Low
+                            </option>
+
+                            <option value="Medium"
+                                {% if bug[5] == 'Medium' %}selected{% endif %}>
+                                Medium
+                            </option>
+
+                            <option value="High"
+                                {% if bug[5] == 'High' %}selected{% endif %}>
+                                High
+                            </option>
+
+                            <option value="Critical"
+                                {% if bug[5] == 'Critical' %}selected{% endif %}>
+                                Critical
+                            </option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="submit" class="save-bug-button">
+                        Update Bug
+                    </button>
+
+                    <a href="{{ url_for('home') }}"
+                       class="back-dashboard-button">
+                        Back to Dashboard
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

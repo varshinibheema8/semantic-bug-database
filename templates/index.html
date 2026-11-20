@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Semantic Bug Tracker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <header>
+            <h1>Semantic Bug Tracker</h1>
+
+            <p>Welcome, {{ username }}!</p>
+
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </header>
+
+
+        <!-- DASHBOARD STATISTICS -->
+        <section class="dashboard">
+
+            <h2>Dashboard</h2>
+
+            <div class="stats-container">
+
+                <div class="stat-card">
+                    <h3>Total Bugs</h3>
+                    <p>{{ stats[0] }}</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Open Bugs</h3>
+                    <p>{{ stats[1] }}</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Closed Bugs</h3>
+                    <p>{{ stats[2] }}</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Critical Bugs</h3>
+                    <p>{{ stats[3] }}</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADD BUG BUTTON -->
+        <section class="actions">
+
+            <a href="{{ url_for('add_bug') }}" class="button">
+                + Add New Bug
+            </a>
+
+        </section>
+
+
+        <!-- SEARCH AND FILTER -->
+        <section class="search-section">
+
+            <h2>Search and Filter Bugs</h2>
+
+            <form method="GET" action="{{ url_for('home') }}">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search bug title..."
+                    value="{{ search }}"
+                >
+
+                <select name="status">
+
+                    <option value="">All Statuses</option>
+
+                    <option value="Open"
+                        {% if selected_status == 'Open' %}selected{% endif %}>
+                        Open
+                    </option>
+
+                    <option value="In Progress"
+                        {% if selected_status == 'In Progress' %}selected{% endif %}>
+                        In Progress
+                    </option>
+
+                    <option value="Closed"
+                        {% if selected_status == 'Closed' %}selected{% endif %}>
+                        Closed
+                    </option>
+
+                </select>
+
+
+                <select name="severity">
+
+                    <option value="">All Severities</option>
+
+                    <option value="Low"
+                        {% if selected_severity == 'Low' %}selected{% endif %}>
+                        Low
+                    </option>
+
+                    <option value="Medium"
+                        {% if selected_severity == 'Medium' %}selected{% endif %}>
+                        Medium
+                    </option>
+
+                    <option value="High"
+                        {% if selected_severity == 'High' %}selected{% endif %}>
+                        High
+                    </option>
+
+                    <option value="Critical"
+                        {% if selected_severity == 'Critical' %}selected{% endif %}>
+                        Critical
+                    </option>
+
+                </select>
+
+                <button type="submit">Search</button>
+
+                <a href="{{ url_for('home') }}">Clear Filters</a>
+
+            </form>
+
+        </section>
+
+
+        <!-- BUG RECORDS TABLE -->
+        <section class="bug-section">
+
+            <h2>Bug Records</h2>
+
+            {% if bugs %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Bug ID</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Severity</th>
+                        <th>Priority</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for bug in bugs %}
+
+                    <tr>
+
+                        <td>{{ bug[0] }}</td>
+
+                        <td>{{ bug[1] }}</td>
+
+                        <td>{{ bug[2] }}</td>
+
+                        <td>{{ bug[3] }}</td>
+
+                        <td>{{ bug[4] }}</td>
+
+                        <td>
+
+                            <a href="{{ url_for('edit_bug', bug_id=bug[0]) }}">
+                                Edit
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{{ url_for('delete_bug', bug_id=bug[0]) }}"
+                                style="display:inline;"
+                                onsubmit="return confirm('Are you sure you want to delete this bug?');"
+                            >
+
+                                <button type="submit">
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+                <p>No bugs found.</p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <p>Semantic Database for Software Bugs</p>
+
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>

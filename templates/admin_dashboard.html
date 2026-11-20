@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Semantic Bug Tracker</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .admin-page {
+            max-width: 1250px;
+            margin: 30px auto;
+            padding: 0 22px 40px;
+        }
+
+        .admin-top {
+            background: #1769aa;
+            color: white;
+            padding: 22px 28px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-top h1 { margin: 0 0 5px; }
+        .admin-top p { margin: 0; opacity: .9; }
+
+        .admin-top a {
+            color: #1769aa;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 22px 0;
+        }
+
+        .admin-stat, .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 14px rgba(25,65,100,.08);
+        }
+
+        .admin-stat span {
+            color: #607080;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .admin-stat strong {
+            color: #1769aa;
+            font-size: 28px;
+        }
+
+        .admin-section {
+            margin-top: 22px;
+            overflow-x: auto;
+        }
+
+        .admin-section h2 {
+            color: #174f7d;
+            margin: 0 0 16px;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #e7edf3;
+        }
+
+        .admin-table th {
+            color: #174f7d;
+            background: #f2f7fb;
+        }
+
+        .admin-pill {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #e8f2fb;
+            color: #1769aa;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .admin-pill.inactive {
+            background: #fff0ed;
+            color: #b33b2e;
+        }
+
+        .admin-action {
+            border: 0;
+            border-radius: 7px;
+            padding: 8px 11px;
+            background: #1769aa;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .admin-action.danger {
+            background: #b94a48;
+        }
+
+        .admin-muted { color: #6b7785; }
+
+        .admin-form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(160px, 1fr));
+            gap: 14px;
+        }
+
+        .admin-field label {
+            display: block;
+            color: #174f7d;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .admin-field input, .admin-field select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccd8e3;
+            border-radius: 8px;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .admin-form-actions { margin-top: 14px; }
+
+        .admin-note {
+            color: #687888;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        @media(max-width: 760px) {
+            .admin-stats {
+                grid-template-columns: repeat(2, minmax(130px, 1fr));
+            }
+
+            .admin-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .admin-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-page">
+
+    <!-- HEADER -->
+    <header class="admin-top">
+
+        <div>
+            <h1>Admin Dashboard</h1>
+            <p>Welcome, {{ username }} · Manage users, projects and bugs</p>
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="{{ url_for('add_bug') }}">+ Add New Bug</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+
+    </header>
+
+
+    <!-- STATISTICS -->
+    <section class="admin-stats">
+
+        <div class="admin-stat">
+            <span>Total Bugs</span>
+            <strong>{{ bug_stats[0] }}</strong>
+        </div>
+
+        <div class="admin-stat">
+            <span>Open Bugs</span>
+            <strong>{{ bug_stats[1] }}</strong>
+        </div>
+
+        <div class="admin-stat">
+            <span>Closed Bugs</span>
+            <strong>{{ bug_stats[2] }}</strong>
+        </div>
+
+        <div class="admin-stat">
+            <span>Critical Bugs</span>
+            <strong>{{ bug_stats[3] }}</strong>
+        </div>
+
+        <div class="admin-stat">
+            <span>Registered Users</span>
+            <strong>{{ user_count }}</strong>
+        </div>
+
+        <div class="admin-stat">
+            <span>Projects</span>
+            <strong>{{ project_count }}</strong>
+        </div>
+
+    </section>
+
+
+    <!-- CREATE USER -->
+    <section class="admin-section">
+
+        <h2>Create New User Account</h2>
+
+        <form method="POST"
+              action="{{ url_for('create_user') }}">
+
+            <div class="admin-form-grid">
+
+                <div class="admin-field">
+                    <label>Username</label>
+                    <input type="text"
+                           name="username"
+                           required
+                           maxlength="100"
+                           placeholder="Enter username">
+                </div>
+
+                <div class="admin-field">
+                    <label>Email</label>
+                    <input type="email"
+                           name="email"
+                           required
+                           maxlength="255"
+                           placeholder="Enter email">
+                </div>
+
+                <div class="admin-field">
+                    <label>Temporary Password</label>
+                    <input type="password"
+                           name="password"
+                           required
+                           minlength="8"
+                           placeholder="At least 8 characters">
+                </div>
+
+            </div>
+
+            <div class="admin-form-actions">
+                <button class="admin-action" type="submit">
+                    Create User
+                </button>
+            </div>
+
+            <p class="admin-note">
+                New accounts are created as ordinary users.
+            </p>
+
+        </form>
+
+    </section>
+
+
+    <!-- ADD MEMBER -->
+    <section class="admin-section">
+
+        <h2>Add User to Project</h2>
+
+        <form method="POST"
+              action="{{ url_for('add_project_member') }}">
+
+            <div class="admin-form-grid">
+
+                <div class="admin-field">
+                    <label>Existing User</label>
+
+                    <select name="user_id" required>
+                        <option value="">Select user</option>
+
+                        {% for u in active_users %}
+                        <option value="{{ u[0] }}">
+                            {{ u[1] }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div class="admin-field">
+                    <label>Project</label>
+
+                    <select name="project_id" required>
+                        <option value="">Select project</option>
+
+                        {% for p in projects %}
+                        <option value="{{ p[0] }}">
+                            {{ p[1] }}
+                        </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div class="admin-field">
+                    <label>Project Role</label>
+
+                    <select name="role" required>
+                        <option value="member">Member</option>
+                        <option value="owner">Owner</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="admin-form-actions">
+                <button class="admin-action" type="submit">
+                    Add / Update Membership
+                </button>
+            </div>
+
+            <p class="admin-note">
+                Existing memberships will have their role updated.
+            </p>
+
+        </form>
+
+    </section>
+
+
+    <!-- PROJECT MEMBERS -->
+    <section class="admin-section">
+
+        <h2>Project Members</h2>
+
+        <table class="admin-table">
+
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Project</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for m in memberships %}
+
+                <tr>
+                    <td>{{ m[1] }}</td>
+                    <td>{{ m[3] }}</td>
+
+                    <td>
+                        <span class="admin-pill">
+                            {{ m[4] }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <form method="POST"
+                              action="{{ url_for('remove_project_member') }}"
+                              onsubmit="return confirm('Remove this user from the project?');">
+
+                            <input type="hidden"
+                                   name="user_id"
+                                   value="{{ m[0] }}">
+
+                            <input type="hidden"
+                                   name="project_id"
+                                   value="{{ m[2] }}">
+
+                            <button class="admin-action danger"
+                                    type="submit">
+                                Remove
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="4">No project memberships found.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- USER MANAGEMENT -->
+    <section class="admin-section">
+
+        <h2>User Management</h2>
+
+        <table class="admin-table">
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for user in users %}
+
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+
+                    <td>
+                        <span class="admin-pill">
+                            {{ user[3] }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="admin-pill {% if not user[4] %}inactive{% endif %}">
+                            {{ 'Active' if user[4] else 'Inactive' }}
+                        </span>
+                    </td>
+
+                    <td>
+
+                        {% if user[3] != 'admin' %}
+
+                        <form method="POST"
+                              action="{{ url_for('toggle_user', user_id=user[0]) }}"
+                              onsubmit="return confirm('Change this account status?');">
+
+                            <button class="admin-action {% if user[4] %}danger{% endif %}"
+                                    type="submit">
+
+                                {{ 'Deactivate' if user[4] else 'Activate' }}
+
+                            </button>
+
+                        </form>
+
+                        {% else %}
+
+                        <span class="admin-muted">Protected</span>
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="6">No users found.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- ALL BUG RECORDS -->
+    <section class="admin-section">
+
+        <h2>All Bug Records</h2>
+
+        <table class="admin-table">
+
+            <thead>
+                <tr>
+                    <th>Bug ID</th>
+                    <th>Title</th>
+                    <th>Project</th>
+                    <th>Created By</th>
+                    <th>Status</th>
+                    <th>Severity</th>
+                    <th>Visibility</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for bug in bugs %}
+
+                <tr>
+                    <td>{{ bug[0] }}</td>
+                    <td>{{ bug[1] }}</td>
+                    <td>{{ bug[7] or '—' }}</td>
+                    <td>{{ bug[6] or 'Unknown' }}</td>
+                    <td>{{ bug[2] }}</td>
+                    <td>{{ bug[3] }}</td>
+                    <td>{{ bug[5] }}</td>
+
+                    <td>
+
+                        <a href="{{ url_for('edit_bug', bug_id=bug[0]) }}">
+                            Edit
+                        </a>
+
+                        <form method="POST"
+                              action="{{ url_for('delete_bug', bug_id=bug[0]) }}"
+                              style="display:inline"
+                              onsubmit="return confirm('Delete this bug permanently?');">
+
+                            <button class="admin-action danger"
+                                    type="submit">
+                                Delete
+                            </button>
+
+                        </form>
+
+                    </td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="8">No bugs found.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- PROJECTS -->
+    <section class="admin-section">
+
+        <h2>Projects</h2>
+
+        <table class="admin-table">
+
+            <thead>
+                <tr>
+                    <th>Project ID</th>
+                    <th>Project Name</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for project in projects %}
+
+                <tr>
+                    <td>{{ project[0] }}</td>
+                    <td>{{ project[1] }}</td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="2">No projects found.</td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f5fb;
+    color: #25364b;
+}
+
+.container {
+    width: 92%;
+    max-width: 1400px;
+    margin: 35px auto;
+}
+
+header {
+    background: #243f5b;
+    color: white;
+    padding: 30px 35px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+header p {
+    margin-bottom: 10px;
+}
+
+header a {
+    color: white;
+    font-weight: bold;
+}
+
+h2 {
+    margin-bottom: 22px;
+    font-size: 24px;
+}
+
+.dashboard,
+.search-section,
+.bug-section {
+    background: white;
+    padding: 28px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(30, 50, 80, 0.05);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    background: #2862b5;
+    color: white;
+    padding: 25px;
+    border-radius: 13px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.actions {
+    margin: 25px 0;
+}
+
+.button {
+    display: inline-block;
+    background: #2862b5;
+    color: white;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: #1e4f95;
+}
+
+.search-section form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+input,
+select {
+    padding: 12px;
+    border: 1px solid #d5dce5;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+button {
+    background: #2862b5;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1e4f95;
+}
+
+.search-section a {
+    color: #2862b5;
+    align-self: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th {
+    background: #eaf0f8;
+    color: #25364b;
+    padding: 17px;
+    text-align: left;
+}
+
+td {
+    padding: 17px;
+    border-bottom: 1px solid #e5eaf1;
+}
+
+tr:hover {
+    background: #f7f9fc;
+}
+
+td a {
+    color: #2862b5;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+td form button {
+    background: #d9534f;
+    padding: 7px 11px;
+}
+
+footer {
+    text-align: center;
+    color: #718096;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .search-section form {
+        flex-direction: column;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    td, th {
+        padding: 10px;
+    }
+}
+
+
+/* =================================
+   ADD NEW BUG PAGE DESIGN
+================================= */
+
+.form-header {
+    background: #243f5b;
+    color: white;
+    padding: 30px 5%;
+    border-radius: 0 0 16px 16px;
+}
+
+.form-header-content {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.form-header h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.form-header p {
+    font-size: 17px;
+    color: #e0e9f4;
+}
+
+.add-bug-container {
+    max-width: 950px;
+    width: 92%;
+    margin: 45px auto;
+}
+
+.add-bug-card {
+    background: white;
+    padding: 38px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(30, 50, 80, 0.07);
+}
+
+.form-heading {
+    margin-bottom: 32px;
+}
+
+.form-heading h2 {
+    font-size: 27px;
+    color: #25364b;
+    margin-bottom: 9px;
+}
+
+.form-heading p {
+    color: #7b8798;
+    font-size: 15px;
+}
+
+.bug-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 23px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 15px;
+    font-weight: bold;
+    color: #40536b;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #d5dce5;
+    border-radius: 10px;
+    background: white;
+    font-size: 15px;
+    color: #25364b;
+    font-family: Arial, sans-serif;
+    outline: none;
+}
+
+.form-group input,
+.form-group select {
+    height: 52px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2862b5;
+    box-shadow: 0 0 0 3px rgba(40, 98, 181, 0.10);
+}
+
+.form-group small {
+    color: #7b8798;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.save-bug-button {
+    background: #2862b5;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 15px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.save-bug-button:hover {
+    background: #1e4f95;
+}
+
+.back-dashboard-button {
+    color: #2862b5;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 12px 15px;
+}
+
+.back-dashboard-button:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 650px) {
+
+    .add-bug-card {
+        padding: 23px;
+    }
+
+    .bug-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .save-bug-button {
+        width: 100%;
+    }
+
+    .back-dashboard-button {
+        text-align: center;
+    }
+}

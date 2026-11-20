@@ -1,0 +1,102 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Semantic Database for Software Bugs</title>
+<style>
+body{margin:0;background:#080808;color:#fff;font-family:Arial,sans-serif}.page{padding:24px}.section{margin:0 0 50px}h1{text-align:center}h2{text-align:center;margin:8px 0 20px}.note{text-align:center;color:#bbb;margin-bottom:12px}svg{display:block;margin:auto;background:#111;max-width:100%;height:auto}.e{fill:#111;stroke:#fff;stroke-width:2}.a{fill:#111;stroke:#fff;stroke-width:1.8}.d{fill:#111;stroke:#fff;stroke-width:2}.ln{stroke:#fff;stroke-width:2;fill:none}.txt{fill:#fff;font-size:14px}.title{fill:#fff;font-size:17px;font-weight:bold}.card{fill:#fff;font-size:14px;font-weight:bold}.tbl{fill:#684205;stroke:#d9a45a;stroke-width:1.8}.head{fill:#684205;stroke:#d9a45a;stroke-width:1.8}.row{fill:#eee;stroke:#999;stroke-width:1}.ft{fill:#111;font-size:13px}.tt{fill:#fff;font-size:16px;font-weight:bold}.rel{fill:#fff;font-size:12px;font-weight:bold}.pk{text-decoration:underline}
+</style></head><body><div class="page">
+<h1>Semantic Database for Software Bugs</h1>
+<div class="section"><h2>1. Chen ER Diagram</h2><div class="note">Rectangles = Entities &nbsp; | &nbsp; Ovals = Attributes &nbsp; | &nbsp; Diamonds = Relationships</div>
+<svg viewBox="0 0 1450 850" xmlns="http://www.w3.org/2000/svg">
+<!-- entities -->
+<rect class="e" x="40" y="80" width="160" height="55"/><text class="title" x="120" y="114" text-anchor="middle">PROJECT</text>
+<rect class="e" x="40" y="350" width="160" height="55"/><text class="title" x="120" y="384" text-anchor="middle">DEVELOPER</text>
+<rect class="e" x="40" y="620" width="160" height="55"/><text class="title" x="120" y="654" text-anchor="middle">MODULE</text>
+<rect class="e" x="610" y="350" width="190" height="65"/><text class="title" x="705" y="390" text-anchor="middle">BUG</text>
+<rect class="e" x="1130" y="70" width="160" height="55"/><text class="title" x="1210" y="104" text-anchor="middle">ERROR</text>
+<rect class="e" x="1130" y="320" width="160" height="55"/><text class="title" x="1210" y="354" text-anchor="middle">FIX</text>
+<rect class="e" x="1130" y="570" width="160" height="55"/><text class="title" x="1210" y="604" text-anchor="middle">ROOT_CAUSE</text>
+<rect class="e" x="40" y="760" width="160" height="55"/><text class="title" x="120" y="794" text-anchor="middle">TECHNOLOGY</text>
+<rect class="e" x="1120" y="760" width="190" height="55"/><text class="title" x="1215" y="794" text-anchor="middle">BUG_EMBEDDING</text>
+<!-- relationships -->
+<polygon class="d" points="320,108 370,80 420,108 370,136"/><text class="title" x="370" y="113" text-anchor="middle">BELONGS TO</text>
+<polygon class="d" points="320,378 370,350 420,378 370,406"/><text class="title" x="370" y="383" text-anchor="middle">REPORTS</text>
+<polygon class="d" points="320,648 370,620 420,648 370,676"/><text class="title" x="370" y="653" text-anchor="middle">OCCURS IN</text>
+<polygon class="d" points="900,105 950,77 1000,105 950,133"/><text class="title" x="950" y="110" text-anchor="middle">GENERATES</text>
+<polygon class="d" points="900,347 950,319 1000,347 950,375"/><text class="title" x="950" y="352" text-anchor="middle">RESOLVED BY</text>
+<polygon class="d" points="900,595 950,567 1000,595 950,623"/><text class="title" x="950" y="600" text-anchor="middle">CAUSED BY</text>
+<polygon class="d" points="350,755 405,725 460,755 405,785"/><text class="title" x="405" y="760" text-anchor="middle">USES</text>
+<polygon class="d" points="900,755 950,727 1000,755 950,783"/><text class="title" x="950" y="760" text-anchor="middle">HAS</text>
+<!-- relationship lines -->
+<path class="ln" d="M200 108H320M420 108L610 370"/><text class="card" x="270" y="98">1</text><text class="card" x="550" y="285">N</text>
+<path class="ln" d="M200 378H320M420 378L610 385"/><text class="card" x="270" y="368">1</text><text class="card" x="550" y="375">N</text>
+<path class="ln" d="M200 648H320M420 648L610 405"/><text class="card" x="270" y="638">1</text><text class="card" x="550" y="535">N</text>
+<path class="ln" d="M800 370L900 105M1000 105H1130"/><text class="card" x="820" y="300">1</text><text class="card" x="1060" y="95">N</text>
+<path class="ln" d="M800 385H900M1000 347H1130"/><text class="card" x="830" y="375">1</text><text class="card" x="1060" y="337">N</text>
+<path class="ln" d="M800 405L900 595M1000 595H1130"/><text class="card" x="825" y="470">M</text><text class="card" x="1060" y="585">1</text>
+<path class="ln" d="M200 787H350M460 755L610 415"/><text class="card" x="275" y="777">M</text><text class="card" x="550" y="585">N</text>
+<path class="ln" d="M800 415L900 755M1000 755L1120 787"/><text class="card" x="830" y="500">1</text><text class="card" x="1050" y="745">1</text>
+<!-- selected attributes -->
+<ellipse class="a" cx="80" cy="30" rx="60" ry="22"/><text class="txt pk" x="80" y="35" text-anchor="middle">Project_ID</text><line class="ln" x1="90" y1="52" x2="105" y2="80"/>
+<ellipse class="a" cx="230" cy="35" rx="68" ry="22"/><text class="txt" x="230" y="40" text-anchor="middle">Project_Name</text><line class="ln" x1="215" y1="52" x2="165" y2="80"/>
+<ellipse class="a" cx="120" cy="180" rx="60" ry="22"/><text class="txt" x="120" y="185" text-anchor="middle">Description</text><line class="ln" x1="120" y1="158" x2="120" y2="135"/>
+<ellipse class="a" cx="60" cy="300" rx="65" ry="22"/><text class="txt pk" x="60" y="305" text-anchor="middle">Developer_ID</text><line class="ln" x1="85" y1="316" x2="105" y2="350"/>
+<ellipse class="a" cx="205" cy="290" rx="45" ry="22"/><text class="txt" x="205" y="295" text-anchor="middle">Name</text><line class="ln" x1="205" y1="312" x2="165" y2="350"/>
+<ellipse class="a" cx="280" cy="390" rx="45" ry="22"/><text class="txt" x="280" y="395" text-anchor="middle">Email</text><line class="ln" x1="235" y1="390" x2="200" y2="390"/>
+<ellipse class="a" cx="205" cy="450" rx="45" ry="22"/><text class="txt" x="205" y="455" text-anchor="middle">Role</text><line class="ln" x1="205" y1="428" x2="165" y2="405"/>
+<ellipse class="a" cx="60" cy="560" rx="58" ry="22"/><text class="txt pk" x="60" y="565" text-anchor="middle">Module_ID</text><line class="ln" x1="85" y1="578" x2="105" y2="620"/>
+<ellipse class="a" cx="210" cy="550" rx="65" ry="22"/><text class="txt" x="210" y="555" text-anchor="middle">Module_Name</text><line class="ln" x1="210" y1="572" x2="165" y2="620"/>
+<ellipse class="a" cx="280" cy="650" rx="60" ry="22"/><text class="txt" x="280" y="655" text-anchor="middle">Description</text><line class="ln" x1="235" y1="650" x2="200" y2="650"/>
+<ellipse class="a" cx="520" cy="300" rx="48" ry="22"/><text class="txt pk" x="520" y="305" text-anchor="middle">Bug_ID</text><line class="ln" x1="555" y1="315" x2="635" y2="350"/>
+<ellipse class="a" cx="640" cy="270" rx="45" ry="22"/><text class="txt" x="640" y="275" text-anchor="middle">Title</text><line class="ln" x1="655" y1="292" x2="675" y2="350"/>
+<ellipse class="a" cx="760" cy="270" rx="58" ry="22"/><text class="txt" x="760" y="275" text-anchor="middle">Status</text><line class="ln" x1="760" y1="292" x2="735" y2="350"/>
+<ellipse class="a" cx="850" cy="420" rx="62" ry="22"/><text class="txt" x="850" y="425" text-anchor="middle">Severity</text><line class="ln" x1="805" y1="415" x2="800" y2="410"/>
+<ellipse class="a" cx="700" cy="470" rx="52" ry="22"/><text class="txt" x="700" y="475" text-anchor="middle">Priority</text><line class="ln" x1="700" y1="448" x2="700" y2="415"/>
+<ellipse class="a" cx="520" cy="450" rx="58" ry="22"/><text class="txt" x="520" y="455" text-anchor="middle">Project_ID</text><line class="ln" x1="575" y1="440" x2="610" y2="410"/>
+<ellipse class="a" cx="500" cy="390" rx="68" ry="22"/><text class="txt" x="500" y="395" text-anchor="middle">Developer_ID</text><line class="ln" x1="568" y1="390" x2="610" y2="390"/>
+<ellipse class="a" cx="500" cy="330" rx="55" ry="22"/><text class="txt" x="500" y="335" text-anchor="middle">Module_ID</text><line class="ln" x1="555" y1="335" x2="610" y2="365"/>
+<ellipse class="a" cx="520" cy="500" rx="48" ry="22"/><text class="txt" x="520" y="505" text-anchor="middle">Cause_ID</text><line class="ln" x1="560" y1="485" x2="630" y2="415"/>
+<!-- right attributes -->
+<ellipse class="a" cx="1120" cy="30" rx="48" ry="22"/><text class="txt pk" x="1120" y="35" text-anchor="middle">Error_ID</text><line class="ln" x1="1135" y1="50" x2="1150" y2="70"/>
+<ellipse class="a" cx="1230" cy="30" rx="45" ry="22"/><text class="txt" x="1230" y="35" text-anchor="middle">Bug_ID</text><line class="ln" x1="1230" y1="52" x2="1220" y2="70"/>
+<ellipse class="a" cx="1350" cy="100" rx="70" ry="22"/><text class="txt" x="1350" y="105" text-anchor="middle">Error_Message</text><line class="ln" x1="1290" y1="105" x2="1290" y2="105"/>
+<ellipse class="a" cx="1280" cy="165" rx="50" ry="22"/><text class="txt" x="1280" y="170" text-anchor="middle">Error_Type</text><line class="ln" x1="1260" y1="145" x2="1230" y2="125"/>
+<ellipse class="a" cx="1120" cy="280" rx="42" ry="22"/><text class="txt pk" x="1120" y="285" text-anchor="middle">Fix_ID</text><line class="ln" x1="1135" y1="300" x2="1150" y2="320"/>
+<ellipse class="a" cx="1230" cy="280" rx="45" ry="22"/><text class="txt" x="1230" y="285" text-anchor="middle">Bug_ID</text><line class="ln" x1="1230" y1="302" x2="1220" y2="320"/>
+<ellipse class="a" cx="1350" cy="345" rx="70" ry="22"/><text class="txt" x="1350" y="350" text-anchor="middle">Fix_Description</text><line class="ln" x1="1300" y1="345" x2="1290" y2="345"/>
+<ellipse class="a" cx="1280" cy="420" rx="45" ry="22"/><text class="txt" x="1280" y="425" text-anchor="middle">Fix_Date</text><line class="ln" x1="1260" y1="400" x2="1230" y2="375"/>
+<ellipse class="a" cx="1120" cy="420" rx="50" ry="22"/><text class="txt" x="1120" y="425" text-anchor="middle">Fix_Status</text><line class="ln" x1="1130" y1="398" x2="1150" y2="375"/>
+<ellipse class="a" cx="1100" cy="520" rx="48" ry="22"/><text class="txt pk" x="1100" y="525" text-anchor="middle">Cause_ID</text><line class="ln" x1="1120" y1="538" x2="1150" y2="570"/>
+<ellipse class="a" cx="1300" cy="520" rx="75" ry="22"/><text class="txt" x="1300" y="525" text-anchor="middle">Cause_Description</text><line class="ln" x1="1300" y1="542" x2="1230" y2="570"/>
+<ellipse class="a" cx="1300" cy="650" rx="50" ry="22"/><text class="txt" x="1300" y="655" text-anchor="middle">Cause_Type</text><line class="ln" x1="1280" y1="630" x2="1230" y2="605"/>
+<ellipse class="a" cx="55" cy="720" rx="65" ry="22"/><text class="txt pk" x="55" y="725" text-anchor="middle">Technology_ID</text><line class="ln" x1="80" y1="738" x2="100" y2="760"/>
+<ellipse class="a" cx="215" cy="720" rx="70" ry="22"/><text class="txt" x="215" y="725" text-anchor="middle">Technology_Name</text><line class="ln" x1="200" y1="742" x2="165" y2="760"/>
+<ellipse class="a" cx="300" cy="810" rx="45" ry="22"/><text class="txt" x="300" y="815" text-anchor="middle">Version</text><line class="ln" x1="260" y1="800" x2="200" y2="790"/>
+<ellipse class="a" cx="1100" cy="710" rx="65" ry="22"/><text class="txt pk" x="1100" y="715" text-anchor="middle">Embedding_ID</text><line class="ln" x1="1120" y1="730" x2="1150" y2="760"/>
+<ellipse class="a" cx="1215" cy="710" rx="45" ry="22"/><text class="txt" x="1215" y="715" text-anchor="middle">Bug_ID</text><line class="ln" x1="1215" y1="732" x2="1215" y2="760"/>
+<ellipse class="a" cx="1330" cy="710" rx="55" ry="22"/><text class="txt" x="1330" y="715" text-anchor="middle">Model_Name</text><line class="ln" x1="1320" y1="732" x2="1270" y2="760"/>
+<ellipse class="a" cx="1300" cy="825" rx="75" ry="22"/><text class="txt" x="1300" y="830" text-anchor="middle">Embedding_Vector</text><line class="ln" x1="1270" y1="805" x2="1260" y2="815"/>
+</svg></div>
+
+<div class="section"><h2>2. Relational / Table ER Diagram</h2><div class="note">PK = Primary Key &nbsp; | &nbsp; FK = Foreign Key &nbsp; | &nbsp; Cardinalities shown on lines</div>
+<svg viewBox="0 0 1500 900" xmlns="http://www.w3.org/2000/svg">
+<g><rect class="tbl" x="40" y="40" width="220" height="125"/><rect class="head" x="40" y="40" width="220" height="34"/><text class="tt" x="150" y="63" text-anchor="middle">PROJECT</text><text class="ft" x="52" y="96">PK  Project_ID</text><text class="ft" x="52" y="120">Project_Name</text><text class="ft" x="52" y="144">Description</text></g>
+<g><rect class="tbl" x="40" y="300" width="220" height="135"/><rect class="head" x="40" y="300" width="220" height="34"/><text class="tt" x="150" y="323" text-anchor="middle">DEVELOPER</text><text class="ft" x="52" y="357">PK  Developer_ID</text><text class="ft" x="52" y="381">Name</text><text class="ft" x="52" y="405">Email</text><text class="ft" x="52" y="429">Role</text></g>
+<g><rect class="tbl" x="40" y="560" width="220" height="125"/><rect class="head" x="40" y="560" width="220" height="34"/><text class="tt" x="150" y="583" text-anchor="middle">MODULE</text><text class="ft" x="52" y="616">PK  Module_ID</text><text class="ft" x="52" y="640">Module_Name</text><text class="ft" x="52" y="664">Description</text></g>
+<g><rect class="tbl" x="40" y="760" width="220" height="115"/><rect class="head" x="40" y="760" width="220" height="34"/><text class="tt" x="150" y="783" text-anchor="middle">TECHNOLOGY</text><text class="ft" x="52" y="817">PK  Technology_ID</text><text class="ft" x="52" y="841">Technology_Name</text><text class="ft" x="52" y="865">Version</text></g>
+<g><rect class="tbl" x="560" y="260" width="270" height="335"/><rect class="head" x="560" y="260" width="270" height="34"/><text class="tt" x="695" y="283" text-anchor="middle">BUG</text><text class="ft" x="572" y="318">PK  Bug_ID</text><text class="ft" x="572" y="342">FK  Project_ID</text><text class="ft" x="572" y="366">FK  Developer_ID</text><text class="ft" x="572" y="390">FK  Module_ID</text><text class="ft" x="572" y="414">FK  Cause_ID</text><text class="ft" x="572" y="438">Title</text><text class="ft" x="572" y="462">Description</text><text class="ft" x="572" y="486">Status</text><text class="ft" x="572" y="510">Created_Date</text><text class="ft" x="572" y="534">Updated_Date</text><text class="ft" x="572" y="558">Severity</text><text class="ft" x="572" y="582">Priority</text></g>
+<g><rect class="tbl" x="1080" y="45" width="220" height="135"/><rect class="head" x="1080" y="45" width="220" height="34"/><text class="tt" x="1190" y="68" text-anchor="middle">ERROR</text><text class="ft" x="1092" y="102">PK  Error_ID</text><text class="ft" x="1092" y="126">FK  Bug_ID</text><text class="ft" x="1092" y="150">Error_Message</text><text class="ft" x="1092" y="174">Error_Type</text></g>
+<g><rect class="tbl" x="1080" y="290" width="220" height="155"/><rect class="head" x="1080" y="290" width="220" height="34"/><text class="tt" x="1190" y="313" text-anchor="middle">FIX</text><text class="ft" x="1092" y="347">PK  Fix_ID</text><text class="ft" x="1092" y="371">FK  Bug_ID</text><text class="ft" x="1092" y="395">Fix_Description</text><text class="ft" x="1092" y="419">Fix_Date</text><text class="ft" x="1092" y="443">Fix_Status</text></g>
+<g><rect class="tbl" x="1080" y="540" width="220" height="135"/><rect class="head" x="1080" y="540" width="220" height="34"/><text class="tt" x="1190" y="563" text-anchor="middle">ROOT_CAUSE</text><text class="ft" x="1092" y="597">PK  Cause_ID</text><text class="ft" x="1092" y="621">Cause_Description</text><text class="ft" x="1092" y="645">Cause_Type</text></g>
+<g><rect class="tbl" x="1080" y="750" width="270" height="135"/><rect class="head" x="1080" y="750" width="270" height="34"/><text class="tt" x="1215" y="773" text-anchor="middle">BUG_EMBEDDING</text><text class="ft" x="1092" y="807">PK  Embedding_ID</text><text class="ft" x="1092" y="831">FK  Bug_ID (UNIQUE)</text><text class="ft" x="1092" y="855">Model_Name</text><text class="ft" x="1092" y="879">Embedding_Vector</text></g>
+<g><rect class="tbl" x="500" y="730" width="300" height="115"/><rect class="head" x="500" y="730" width="300" height="34"/><text class="tt" x="650" y="753" text-anchor="middle">BUG_TECHNOLOGY</text><text class="ft" x="512" y="787">PK/FK  Bug_ID</text><text class="ft" x="512" y="811">PK/FK  Technology_ID</text></g>
+<!-- lines -->
+<path class="ln" d="M260 102H430L560 330"/><text class="card" x="300" y="92">1</text><text class="card" x="505" y="250">N</text><text class="rel" x="350" y="88">BELONGS TO</text>
+<path class="ln" d="M260 367H430L560 375"/><text class="card" x="300" y="357">1</text><text class="card" x="505" y="365">N</text><text class="rel" x="355" y="352">REPORTS</text>
+<path class="ln" d="M260 622H430L560 395"/><text class="card" x="300" y="612">1</text><text class="card" x="505" y="515">N</text><text class="rel" x="350" y="607">OCCURS IN</text>
+<path class="ln" d="M830 330L970 112H1080"/><text class="card" x="850" y="300">1</text><text class="card" x="1020" y="102">N</text><text class="rel" x="900" y="185">GENERATES</text>
+<path class="ln" d="M830 375H1080"/><text class="card" x="850" y="365">1</text><text class="card" x="1020" y="365">N</text><text class="rel" x="930" y="355">RESOLVED BY</text>
+<path class="ln" d="M830 415L960 607H1080"/><text class="card" x="850" y="450">M</text><text class="card" x="1020" y="597">1</text><text class="rel" x="920" y="540">CAUSED BY</text>
+<path class="ln" d="M695 595L650 730"/><text class="card" x="675" y="650">1</text><text class="card" x="650" y="715">N</text>
+<path class="ln" d="M260 817H410L500 790"/><text class="card" x="300" y="807">1</text><text class="card" x="465" y="780">N</text><text class="rel" x="350" y="800">USES</text>
+<text class="card" x="820" y="780">N</text><text class="rel" x="835" y="770">M:N via junction</text>
+<path class="ln" d="M780 595L930 818H1080"/><text class="card" x="805" y="640">1</text><text class="card" x="1030" y="808">1</text><text class="rel" x="900" y="745">HAS EMBEDDING</text>
+</svg></div></div></body></html>

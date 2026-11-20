@@ -1,0 +1,86 @@
+-- Semantic Database for Software Bugs
+-- PostgreSQL DDL
+-- Database: semantic_bug_db
+
+CREATE TABLE PROJECT (
+    Project_ID SERIAL PRIMARY KEY,
+    Project_Name VARCHAR(200) NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE DEVELOPER (
+    Developer_ID SERIAL PRIMARY KEY,
+    Name VARCHAR(150) NOT NULL,
+    Email VARCHAR(255),
+    Role VARCHAR(100)
+);
+
+CREATE TABLE MODULE (
+    Module_ID SERIAL PRIMARY KEY,
+    Module_Name VARCHAR(150) NOT NULL,
+    Description TEXT
+);
+
+CREATE TABLE ROOT_CAUSE (
+    Cause_ID SERIAL PRIMARY KEY,
+    Cause_Description TEXT NOT NULL,
+    Cause_Type VARCHAR(100)
+);
+
+CREATE TABLE TECHNOLOGY (
+    Technology_ID SERIAL PRIMARY KEY,
+    Technology_Name VARCHAR(150) NOT NULL,
+    Version VARCHAR(50)
+);
+
+CREATE TABLE BUG (
+    Bug_ID SERIAL PRIMARY KEY,
+    Project_ID INT NOT NULL,
+    Developer_ID INT NOT NULL,
+    Module_ID INT NOT NULL,
+    Cause_ID INT,
+    Title VARCHAR(300) NOT NULL,
+    Description TEXT,
+    Status VARCHAR(50),
+    Created_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Updated_Date TIMESTAMP,
+    Severity VARCHAR(50),
+    Priority VARCHAR(50),
+    FOREIGN KEY (Project_ID) REFERENCES PROJECT(Project_ID),
+    FOREIGN KEY (Developer_ID) REFERENCES DEVELOPER(Developer_ID),
+    FOREIGN KEY (Module_ID) REFERENCES MODULE(Module_ID),
+    FOREIGN KEY (Cause_ID) REFERENCES ROOT_CAUSE(Cause_ID)
+);
+
+CREATE TABLE ERROR (
+    Error_ID SERIAL PRIMARY KEY,
+    Bug_ID INT NOT NULL,
+    Error_Message TEXT,
+    Error_Type VARCHAR(100),
+    FOREIGN KEY (Bug_ID) REFERENCES BUG(Bug_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE FIX (
+    Fix_ID SERIAL PRIMARY KEY,
+    Bug_ID INT NOT NULL,
+    Fix_Description TEXT,
+    Fix_Date TIMESTAMP,
+    Fix_Status VARCHAR(50),
+    FOREIGN KEY (Bug_ID) REFERENCES BUG(Bug_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE BUG_EMBEDDING (
+    Embedding_ID SERIAL PRIMARY KEY,
+    Bug_ID INT NOT NULL UNIQUE,
+    Model_Name VARCHAR(150),
+    Embedding_Vector TEXT,
+    FOREIGN KEY (Bug_ID) REFERENCES BUG(Bug_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE BUG_TECHNOLOGY (
+    Bug_ID INT NOT NULL,
+    Technology_ID INT NOT NULL,
+    PRIMARY KEY (Bug_ID, Technology_ID),
+    FOREIGN KEY (Bug_ID) REFERENCES BUG(Bug_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Technology_ID) REFERENCES TECHNOLOGY(Technology_ID) ON DELETE CASCADE
+);

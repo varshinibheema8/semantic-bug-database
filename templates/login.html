@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Semantic Bug Tracker</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f5fb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            color: #1d2939;
+        }
+
+        .login-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 42px;
+            border-radius: 25px;
+            border: 1px solid #e5eaf1;
+            box-shadow: 0 20px 55px rgba(30, 50, 80, 0.08);
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: #2862b5;
+            border-radius: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 35px;
+            margin-bottom: 32px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: 31px;
+            margin-bottom: 15px;
+            line-height: 1.25;
+        }
+
+        .description {
+            color: #7b8798;
+            font-size: 19px;
+            line-height: 1.55;
+            margin-bottom: 42px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #40536b;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        input {
+            width: 100%;
+            height: 59px;
+            border: 1px solid #d5dce5;
+            border-radius: 13px;
+            padding: 0 15px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2862b5;
+            box-shadow: 0 0 0 3px rgba(40, 98, 181, 0.12);
+        }
+
+        button {
+            width: 100%;
+            height: 59px;
+            background: #2862b5;
+            color: white;
+            border: none;
+            border-radius: 13px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1px;
+        }
+
+        button:hover {
+            background: #1f5098;
+        }
+
+        .error {
+            color: #d92d20;
+            background: #fff0ef;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .footer {
+            color: #7b8798;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 28px;
+        }
+
+        @media (max-width: 500px) {
+            .login-card {
+                padding: 28px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card">
+
+        <div class="logo">⚙</div>
+
+        <p class="subtitle">BUG INVESTIGATION WORKSPACE</p>
+
+        <h1>Welcome to Semantic Bug Tracker</h1>
+
+        <p class="description">
+            Sign in to manage software bugs, track issues
+            and collaborate with your project members.
+        </p>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+
+            <label for="username">Username</label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Sign in</button>
+
+        </form>
+
+        <p class="footer">
+            Secure project access for registered members.
+            <br>
+            Semantic Database for Software Bugs
+        </p>
+
+    </div>
+
+</body>
+</html>
